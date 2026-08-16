@@ -1,0 +1,13 @@
+# Hotel California
+
+A minimal background project inspired by the vibes of "Hotel California", styled with a colorful gradient and soft blur effect similar to Spotify's aesthetic.
+
+## Features
+- Smooth animated gradient background
+- Slightly blurred visuals for a dreamy effect
+- Full-screen, no distractions
+
+## Usage
+Open `index.html` in any modern browser to enjoy the background.
+
+Nagpagawa ako ng background sa ai which is ito -Quizon

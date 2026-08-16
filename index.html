@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel California</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="wrapper">
+      <div class="disk">
+        <img src="eagles.jpg" alt="album-cover" class="album-cover">
+        <div class="spindle"></div>
+      </div>
+      <div class="shine"></div>
+        </div>
+    </div>
+  
+  <audio id="audio" src="Hotel California.mp3" autoplay></audio>
+  
+  <div class="visualizer">
+    <canvas id="visualizer"></canvas>
+  </div>
+  
+  <div class="track-info">
+    <h2 id="song-title">Hotel California</h2>
+    <p id="artist-name">Eagles</p>
+  </div>
+  
+  <div class="control-wrapper">
+    <input type="range" id="seekbar" value="0" step="0.1" min="0" max="100" value="0">
+    <div class="time-container">
+      <span id="current-time">0:00</span>
+      <span id="duration">0:00</span>
+    </div>
+  </div>
+  
+  <div class="main-controls">
+    <button id="back10" class="nav-btn">
+      <span class="arrow">↺</span>
+      <span class="num">10</span>
+    </button>
+    
+    <button id="playBtn" class="play-pause-btn">
+      <div class="icon-container">
+        <div class="bar left-bar"></div>
+        <div class="bar right-bar"></div>
+      </div>
+    </button>
+    
+    <button id="forward10" class="nav-btn">
+      <span class="arrow2">↻</span>
+      <span class="num2">10</span>
+    </button>
+  </div>
+  
+  <div class="lyrics-card" id="lyricsCard">
+    <div class="lyrics-header">
+        <span class="lyrics">Lyrics</span>
+        <button class="expand-btn">view</button>
+    </div>
+    
+    <div class="lyrics-content" id="lyrics-content">
+    </div>
+  </div>
+  
+  <div class="background"></div>
+  
+  <script src="main.js"></script>
+</body>
+</html>

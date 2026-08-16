@@ -1,0 +1,484 @@
+/* Hotel California Background */
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-attachment: fixed;
+  background: linear-gradient(120deg, #4b0082, #800080, #ff4500, #ff8c00, #4b0082);
+  background-size: 400% 400%;
+  filter: blur(8px);
+  animation: gradientShift 10s ease infinite;
+  z-index: -1;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.disk {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: black;
+  border: 10px solid;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.1s linear;
+  z-index: 1;
+  -webkit-mask: radial-gradient(circle at center, transparent 10px, black 11px);
+  mask: radial-gradient(circle at center, transparent 10px, black 11px);;
+}
+
+.shine {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(125deg, 
+    rgba(255,255,255,0) 30%, 
+    rgba(255,255,255,0.35) 48%, 
+    rgba(255,255,255,0.35) 52%, 
+    rgba(255,255,255,0) 70%),
+    linear-gradient(60deg, 
+    rgba(255,255,255,0) 40%, 
+    rgba(255,255,255, 0.2) 50%, 
+    rgba(255,255,255,0) 60%);
+  z-index: 10;
+  pointer-events: none; 
+}
+
+.disk::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    
+    /* Gagawa tayo ng maraming maliliit na circles */
+    background: repeating-radial-gradient(
+        rgba(0, 0, 0, 0.1), 
+        rgba(0, 0, 0, 0.1) 2px, 
+        transparent 3px, 
+        transparent 5px
+    );
+    
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+
+@keyframes rotateDisk {
+  from { 
+    transform: rotate(0deg); 
+  }
+  to { 
+    transform: rotate(360deg); 
+  }
+}
+
+.album-cover {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  opacity: 0.5;
+  z-index: 2;
+  transition: transform 0.1 ease;
+}
+
+.disk.playing {
+  animation: rotate 8s linear infinite !important;
+}
+
+.spindle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: silver;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+
+.visualizer {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  height: 50px;
+  max-width: 300px;
+  margin: 20px auto;
+  display: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(5px);
+  padding: 20px;
+  border-radius: 10px;
+  border: 3px solid black;
+}
+
+#visualizer {
+  display: block;      /* Para masunod yung margin auto */
+  margin: 0 auto;     /* I-center siya horizontal */
+  width: 100%;         /* Wag masyadong dikit sa gilid ng phone */
+  height: 100px;      /* Taasan natin para kitang-kita yung talon */
+  /* background: rgba(0, 0, 0, 0.2); <-- temporary lang para makita yung box */
+}
+
+.control-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#seekbar {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 85%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.4);
+  background-image: linear-gradient(#ffffff, #ffffff);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  display: block;
+  outline: none;
+}
+
+#seekbar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.time-container {
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
+  margin: 5px auto;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+}
+
+.main-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.play-pause-btn {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  border: none;
+  background-color: white;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: 0.3s ease;
+}
+
+.play-pause-btn:active {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transform: scale(0.95);
+}
+
+.icon-container {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.bar  {
+  position: absolute;
+  width: 80%;
+  height: 100%;
+  background-color: black;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
+
+}
+
+.left-bar {
+  left: 0;
+  clip-path: polygon(0% 0%, 40% 0%, 40% 100%, 0% 100%);
+}
+
+.right-bar {
+  right: 0;
+  clip-path: polygon(60% 0%, 100% 0%, 100% 100%, 60% 100%);
+}
+
+.play-pause-btn:not(.playing) .left-bar {
+  width: 51%;
+  clip-path: polygon(0% 0%, 100% 25%, 100% 75%, 0% 100%);
+}
+
+.play-pause-btn:not(.playing) .right-bar {
+  width: 50%;
+  clip-path: polygon(0% 25%, 100% 50%, 100% 50%, 0% 75%);
+  transform: translateX(0.2px);
+}
+
+.play-pause-btn:not(.playing) .icon-container {
+  transform: translateX(3px);
+}
+
+.nav-btn {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px;
+  transform: translateY(-5px);
+}
+
+.nav-btn .arrow, .nav-btn .arrow2 {
+  font-size: 50px;
+  opacity: 0.8;
+}
+
+.nav-btn .num {
+  position: absolute;
+  font-size: 10px;
+  font-weight: bold;
+  font-family: sans-serif;
+  top: 63%;
+  left: 49%;
+  transform: translate(-50%, -50%);
+}
+
+.nav-btn .num2 {
+  position: absolute;
+  font-size: 10px;
+  font-weight: bold;
+  font-family: sans-serif;
+  top: 63%;
+  left: 51%;
+  transform: translate(-50%, -50%);
+}
+
+.nav-btn:active {
+  transform: scale(0.95);
+}
+
+.track-info {
+  text-align: left;
+  padding: 0 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+#song-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#artist-name {
+  font-size: 1rem;
+  color: rgba(255,255,255, 0.7);
+  margin: 5px 0 0 0;
+}
+
+.lyrics-card {
+    position: fixed;
+    bottom: 10px; /* May konting gap sa ilalim */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    max-width: 500px;
+    height: 0.5%; /* Naka-silip lang muna */
+    background: rgba(48,10,86,0.4); /* Glassmorphism */
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 20px;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 🚀 KAPAG NAKA-EXPAND NA */
+.lyrics-card.expanded {
+    height: 95vh; /* Halos full screen */
+    bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    transform: translateX(-50%);
+    background: rgba(48,10,86,0.4);
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+}
+
+.lyrics-content {
+    display: none;
+    height: calc(100% - 60px);
+    margin-top: -20px;
+    padding: 20px;
+    height: 80%;
+    padding-bottom: 50vh;
+    overflow-y: auto;
+    /* Para hindi makita ang scrollbar pero scrollable */
+    scrollbar-width: none; 
+    align-items: center;
+    line-height: 1;
+}
+
+.lyrics-card.expanded .lyrics-content {
+    display: block;
+}
+
+.lyric-line {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.lyrics-line.before {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.lyric-line.active {
+    color: #fff;
+    transform: scale(1.05);
+    text-shadow: 0 0 15px rgba(255,255,255,0.5);
+}
+
+.expand-btn {
+  margin-left: 10px;
+}
+
+.lyrics-header {
+  position: sticky;
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  transform: translateY(-20px);
+}
+
+.lyrics-header span {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.expand-btn {
+  color: #333;
+  border-radius: 10px;
+  border: none;
+  width: 20%;
+  background-color: #fff;
+}
+
+/* Palitan yung .disk sizing */
+.disk {
+  width: clamp(200px, 55vw, 250px);
+  height: clamp(200px, 55vw, 250px);
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: black;
+  border: 10px solid;
+  position: relative;
+  transition: transform 0.1s linear;
+  z-index: 1;
+  -webkit-mask: radial-gradient(circle at center, transparent 10px, black 11px);
+  mask: radial-gradient(circle at center, transparent 10px, black 11px);
+}
+
+/* Alisin/tanggalin na yung 3 @media blocks na binigay ko kanina, 
+   tapos ito na lang idagdag para sa sobrang liit lang na screens 
+   (below 340px, e.g. old iPhone SE) */
+@media (max-width: 340px) {
+  .disk {
+    width: 170px;
+    height: 170px;
+  }
+
+  .play-pause-btn {
+    width: 55px;
+    height: 55px;
+  }
+
+  .nav-btn {
+    width: 50px;
+    height: 50px;
+  }
+}
